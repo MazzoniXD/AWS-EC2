@@ -3,6 +3,11 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "profile" {
+  description = "Profile of the application"
+  default = "tf069"
+}
+
 variable "name" {
   description = "Name of the application"
   default     = "ThiagoMachine"
