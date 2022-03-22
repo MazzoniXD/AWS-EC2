@@ -9,6 +9,11 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+provider "aws" {
+  region  = var.region
+  profile = "tf069"
+}
+
 resource "aws_security_group" "ssh"{
   name = "allopw_ssh"
   description = "Allow SSH connectios"
