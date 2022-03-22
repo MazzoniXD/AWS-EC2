@@ -11,7 +11,6 @@ data "aws_ami" "ubuntu" {
 
 provider "aws" {
   region  = var.region
-  profile = "tf069"
 }
 
 resource "aws_security_group" "ssh"{
