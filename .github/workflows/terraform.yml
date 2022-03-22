@@ -6,6 +6,9 @@ on:
     - fix/*
   pull_request:
 
+env: 
+  region: "us-east-1"
+  
 jobs:
   terraform:
     name: 'terraform plan dev'
@@ -24,6 +27,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.region }}
 
     - name: Terraform init
       run: terraform init
@@ -32,8 +36,12 @@ jobs:
       run: terraform validate -no-color
       
     - name: Terraform Plan
+      env:
+        TF_VAR_region: ${{ env.region }}
       run: terraform plan -no-color
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      env:
+        TF_VAR_region: ${{ env.region }}
       run: terraform apply -auto-approve
