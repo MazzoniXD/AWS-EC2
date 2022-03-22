@@ -20,5 +20,5 @@ variable "instance_type" {
 
 variable "repo" {
   description = "Repository of the application"
-  default     = "github.com/mazzonixd"
+  default     = "https://github.com/MazzoniXD/AWS-EC2/actions"
 }

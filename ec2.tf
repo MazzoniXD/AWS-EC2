@@ -11,15 +11,16 @@ data "aws_ami" "ubuntu" {
 
 provider "aws" {
   region  = var.region
+  profile = "tf069"
 }
 
 resource "aws_security_group" "ssh"{
-  name = "allopw_ssh"
+  name = "allow_ssh"
   description = "Allow SSH connectios"
 
   ingress {
-    from_port = 22
-    to_port = 22
+    from_port = 8080
+    to_port = 8080
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
