@@ -34,8 +34,8 @@ resource "aws_security_group" "ssh" {
   description = "Allow SSH connectios"
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 22
+    to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -44,6 +44,7 @@ resource "aws_security_group" "ssh" {
 resource "aws_instance" "server" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.instance_type
+  key_name               = "id_rsa"
   vpc_security_group_ids = ["${aws_security_group.ssh.id}"]
   lifecycle {
     ignore_changes = [
@@ -57,4 +58,9 @@ resource "aws_instance" "server" {
     Provisioner = "Terraform"
     Repo        = var.repo
   }
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name = "id_rsa"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLvrhpB22gIn5oXEl0zg+tbfkIGI5NqlV9Z3GGueLTWt/xM3Nh2GxYLStA99qLHfzsxUYYI11lqaF8lAmjYegYFjjyFRo3N27RoT0jPyOaQ5QQmypkTv8jMUHe5GuVBgudfTM0OL3g7Br4W+W9ERm34c7o+lIDpWrXfkd6jOSWPp63Hc8D0ws2RTpxB/qOXGM6MENLJBTOO2oY4ZCHhNUWNZL0a9fsTySqPsgIPsYbppjra6raXMXcj+OcaROhnD3/Ru+hpbRTxwiYgDZ3tXR93Z0b6CPRpi9iczG6cAIdIWP3glC5oPKaIyP8o4NNTB08hQH53hczsJNS+okGmRfj mazzoni@DESKTOP-PNJ0R8Q"
 }
